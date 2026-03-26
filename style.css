@@ -1,0 +1,272 @@
+/* ================================
+   VARIABLES GLOBALES
+================================ */
+:root {  /*variables principales.*/
+    --color-fondo: #0f172a;
+    --color-texto: #f8fafc;
+    --color-texto-suave: #94a3b8;
+    --color-acento: #38bdf8;
+    --color-boton: #16a34a;
+    --color-borde: rgba(255, 255, 255, 0.1);
+}
+
+/* ================================
+   RESET
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================================
+   BODY
+================================ */
+body {
+    background-color: var(--color-fondo);  /* el var se usa cuando estmos usando algunas de las variable sroot.*/
+    color: var(--color-texto);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ================================
+   HEADER Y NAV
+================================ */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: var(--color-fondo);
+    border-bottom: 1px solid var(--color-borde);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+/* Tu nombre en el header */
+header h1 {
+    color: var(--color-acento);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Nav */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* El div que envuelve el menú */
+.menu-de-mierda {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Lista de links */
+nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+/* Links del nav */
+nav ul a {
+    color: var(--color-texto-suave);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+nav ul a:hover {
+    color: var(--color-acento);
+}
+
+/* Botón menú móvil (oculto en desktop) */
+.boton-del-salami {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* ================================
+   MAIN (espacio por el nav fijo)
+================================ */
+main {
+    padding-top: 80px;
+}
+
+/* ================================
+   SECCIONES GENERALES
+================================ */
+section {
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+/* ================================
+   SOBRE MÍ
+================================ */
+#sobremi h2:first-child {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-acento);
+    margin-bottom: 0.5rem;
+}
+
+/* Tu nombre "Claudio" */
+#sobremi .nombre {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    margin-bottom: 1.5rem;
+}
+
+#sobremi p {
+    color: var(--color-texto-suave);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+    max-width: 600px;
+}
+
+/* ================================
+   PROYECTOS
+================================ */
+#proyectos h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-acento);
+    margin-bottom: 2rem;
+}
+
+#proyectos p {
+    color: var(--color-texto-suave);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+#proyectos strong {
+    color: var(--color-texto);
+    font-size: 1.3rem;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+/* Links de proyectos */
+#proyectos a {
+    display: inline-block;
+    color: var(--color-texto);
+    text-decoration: none;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    transition: all 0.2s ease;
+}
+
+#proyectos a:hover {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+    transform: translateY(-2px);
+}
+
+/* ================================
+   CONTACTO
+================================ */
+#contacto h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-acento);
+    margin-bottom: 1.5rem;
+}
+
+#contacto p {
+    color: var(--color-texto-suave);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Link del email */
+#contacto a {
+    color: var(--color-acento);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+#contacto a:hover {
+    opacity: 0.7;
+}
+
+/* ================================
+   FOOTER
+================================ */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-texto-suave);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--color-borde);
+}
+
+/* ================================
+   RESPONSIVE (móvil)
+================================ */
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+
+    /* Ocultar links en móvil */
+    nav ul {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 0;
+    }
+
+    /* Mostrar botón menú en móvil */
+    .boton-del-salami {
+        display: block;
+    }
+
+    /* Cuando el menú está abierto */
+    nav ul.abierto {
+        display: flex;
+    }
+
+    section {
+        padding: 3rem 1rem;
+    }
+
+    #sobremi .nombre {
+        font-size: 1.8rem;
+    }
+}
