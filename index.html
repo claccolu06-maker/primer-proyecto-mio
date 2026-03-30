@@ -4,47 +4,151 @@
     <title>Claudio | Portfolio</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="soy un empresario exitoso perra">
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Portfolio de Claudio, estudiante de Economía y desarrollador web">
+    >
 </head>
 <body>
+
+    <!-- NAV FIJO -->
     <header>
         <h1>Claudio</h1>
         <nav>
             <div class="menu-de-mierda">
                 <ul>
-                    ><a href="#sobremi">Sobre mi</a></li>
+                    ><a href="#hero">Inicio</a></li>
+                    ><a href="#sobremi">Sobre mí</a></li>
                     ><a href="#proyectos">Proyectos</a></li>
                     ><a href="#contacto">Contacto</a></li>
                 </ul>
-                <button class="boton-del-salami">Menu</button>
+                <button class="boton-del-salami">Menú</button>
             </div>
         </nav>
     </header>
+
     <main>
+
+        <!-- HERO -->
+        <section id="hero">
+            <div class="hero-contenido">
+                <div class="hero-texto">
+                    <p class="hero-saludo">Hola, soy</p>
+                    <h1 class="hero-nombre">Claudio</h1>
+                    <h2 class="hero-rol">Estudiante de Economía & Desarrollador Web</h2>
+                    <p class="hero-descripcion">
+                        Construyo herramientas digitales que combinan
+                        el mundo financiero con el desarrollo web.
+                        Basado en Sevilla, España.
+                    </p>
+                    <div class="hero-botones">
+                        <a href="#proyectos" class="btn-primario">Ver proyectos</a>
+                        <a href="#contacto" class="btn-secundario">Contacto</a>
+                    </div>
+                </div>
+                <div class="hero-foto">
+                    <!-- Cambia foto-hero.jpg por tu foto real -->
+                    <img src="foto-hero.jpg" alt="Claudio">
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE MÍ -->
         <section id="sobremi">
-            <h2>Sobre mi</h2>
-            <h2 class="nombre">Claudio</h2>
-            <p>aqui tienes todo lo relacionado a mi.</p>
-            <p>soy un chico que estudia marketing y esta aprendiendo a programar.</p>
+            <div class="sobremi-contenido">
+                <div class="sobremi-foto">
+                    <!-- Cambia foto-sobremi.jpg por tu foto real -->
+                    <img src="foto-sobremi.jpg" alt="Claudio">
+                </div>
+                <div class="sobremi-texto">
+                    <span class="seccion-tag">Sobre mí</span>
+                    <h2 class="seccion-titulo">Claudio</h2>
+                    <p>
+                        Soy estudiante de Economía y Empresa en Sevilla,
+                        aprendiendo a programar y combinando el mundo
+                        financiero con el desarrollo web.
+                    </p>
+                    <p>
+                        Me apasiona construir herramientas digitales
+                        que resuelvan problemas reales.
+                    </p>
+                    <div class="skills-tags">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Economía</span>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <!-- PROYECTOS -->
         <section id="proyectos">
-            <h3>Proyectos</h3>
-            <p><strong>estos son mis 2 proyectos.</strong></p>
-            <p>el primero es un dashboard financiero donde puedes poner tus gastos e ingresos.</p>
-            <a href="https://dashboardfinanciero.es" target="_blank">Dashboard Financiero</a>
-            <p>es un mapa interactivo de sevilla donde pones todos tus locales.</p>
-            <a href="https://claccolu06-maker.github.io/mapa-producto-local/" target="_blank">Mapa de Productos Locales</a>
+            <div class="proyectos-header">
+                <span class="seccion-tag">Proyectos</span>
+                <h2 class="seccion-titulo">Estos son mis 2 proyectos</h2>
+            </div>
+            <div class="proyectos-grid">
+
+                <!-- Proyecto 1 -->
+                <div class="proyecto-card">
+                    <!-- Cambia proyecto-dashboard.jpg por tu captura real -->
+                    <img src="proyecto-dashboard.jpg" alt="Dashboard Financiero" class="proyecto-imagen">
+                    <div class="proyecto-info">
+                        <h3>Dashboard Financiero</h3>
+                        <p>
+                            Herramienta donde puedes registrar tus
+                            gastos e ingresos y visualizarlos.
+                        </p>
+                        <a href="https://dashboardfinanciero.es"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="proyecto-link">
+                            Ver proyecto
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Proyecto 2 -->
+                <div class="proyecto-card">
+                    <!-- Cambia proyecto-mapa.jpg por tu captura real -->
+                    <img src="proyecto-mapa.jpg" alt="Mapa de Productos Locales" class="proyecto-imagen">
+                    <div class="proyecto-info">
+                        <h3>Mapa de Productos Locales</h3>
+                        <p>
+                            Mapa interactivo de Sevilla donde puedes
+                            localizar negocios y productos locales.
+                        </p>
+                        <a href="https://claccolu06-maker.github.io/mapa-producto-local/"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="proyecto-link">
+                            Ver proyecto
+                        </a>
+                    </div>
+                </div>
+
+            </div>
         </section>
+
+        <!-- CONTACTO -->
         <section id="contacto">
-            <h4>Contacto</h4>
-            <p>si quieres contactar conmigo puedes hacerlo a traves de mi correo:
-                <a href="mailto:claccolu06@gmail.com">claccolu06@gmail.com</a>
+            <span class="seccion-tag">Contacto</span>
+            <h2 class="seccion-titulo">¿Hablamos?</h2>
+            <p class="contacto-mensaje">
+                Si quieres contactar conmigo puedes hacerlo
+                a través de mi correo.
             </p>
+            <a href="mailto:claccolu06@gmail.com" class="contacto-email">
+                claccolu06@gmail.com
+            </a>
         </section>
+
     </main>
+
+    <!-- PIE DE PÁGINA -->
     <footer>
         <p>Claudio 2026</p>
     </footer>
+
 </body>
 </html>
