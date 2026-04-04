@@ -1,478 +1,857 @@
-/* ================================
-   VARIABLES GLOBALES
-================================ */ /* master lo unico que tienes que hacer es poner abslotoamente todas las caracteristicas en root y te ahorras mucho tiempo.*/
-:root {
-    --color-fondo: #0d0d12;
-    --color-fondo-2: #13121a;
-    --color-card: rgba(255, 255, 255, 0.04);
-    --color-texto: #f0eeff;
-    --color-texto-suave: #9d97b8;
-    --color-acento: #a855f7;
-    --color-acento-suave: rgba(168, 85, 247, 0.15);
-    --color-acento-borde: rgba(168, 85, 247, 0.4);
-    --color-borde: rgba(255, 255, 255, 0.08);
-    --fuente: 'Inter', system-ui, -apple-system, sans-serif;
-    --radio: 16px;
-    --sombra: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
+/* =========================================================
+   1. VARIABLES GLOBALES
+   ========================================================= */
 
-/* ================================
-   GOOGLE FONTS
-================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/*
+Aquí guardamos colores, sombras y tonos importantes.
+Esto sirve para no repetir valores todo el rato.
+
+Piensa en esto como una caja de herramientas:
+- color del fondo
+- color del texto
+- color de botones
+- color de peligro
+*/
 
 :root {
-    --color-fondo: #0d0d12;
-    ...
-}
-/* ================================
-   RESET
-================================ */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  --bg-main: #050816;         /* Fondo principal de la app */
+  --bg-elevated: rgba(15, 23, 42, 0.9); /* Fondo de cajas/paneles */
+  --text-main: #e5e7eb;       /* Color principal del texto */
+  --text-muted: #9ca3af;      /* Texto secundario, más apagado */
+  --accent-blue: #38bdf8;     /* Azul destacado */
+  --accent-green: #22c55e;    /* Verde para progreso o éxito */
+  --accent-red: #ef4444;      /* Rojo para borrar, alertas */
 }
 
-html {
-    scroll-behavior: smooth;
+/*
+Si activas el tema claro, cambian varios colores.
+La estructura sigue igual, solo cambian “las pinturas”.
+*/
+
+[data-theme="light"] {
+  --bg-main: #f3f4f6;
+  --bg-elevated: rgba(255, 255, 255, 0.98);
+  --text-main: #111827;
+  --text-muted: #6b7280;
 }
 
-/* ================================
-   BODY
-================================ */
+
+/* =========================================================
+   2. RESET GENERAL
+   ========================================================= */
+
+/*
+Esto limpia estilos raros que trae el navegador por defecto.
+Muy importante para empezar desde una base controlada.
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+box-sizing: border-box hace que el ancho y el alto
+se calculen mejor incluyendo padding y borde.
+
+Sin esto, a veces una caja mide más de lo esperado.
+*/
+
+html,
 body {
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    font-family: var(--fuente);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+  color: var(--text-main);
+}
+
+/*
+body es el “suelo” de toda la web.
+Aquí decides fuente, color general y fondo principal.
+*/
+
+
+/* =========================================================
+   3. TOASTS
+   ========================================================= */
+
+/*
+El toast-container guarda los avisos pequeños
+que salen flotando arriba a la derecha.
+Ejemplo: “Tarea guardada”.
+*/
+
+#toast-container {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+}
+
+/*
+position: fixed = se queda pegado a la pantalla
+aunque hagas scroll.
+z-index alto = aparece por encima de casi todo.
+*/
+
+.toast {
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+/*
+Cada toast es como una pequeña cápsula redondeada.
+*/
+
+
+/* =========================================================
+   4. LOGIN
+   ========================================================= */
+
+/*
+La pantalla de login ocupa toda la ventana.
+Sirve para tapar la app hasta que el usuario entre.
+*/
+
+.login-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+inset: 0 = top:0 right:0 bottom:0 left:0
+O sea: ocupa toda la pantalla.
+*/
+
+.login-card {
+  width: min(420px, 100%);
+  padding: 2rem;
+  border-radius: 1.5rem;
+}
+
+/*
+Esta es la cajita del login.
+width: min(420px, 100%) quiere decir:
+- como máximo 420px
+- pero si la pantalla es pequeña, no se salga
+*/
+
+
+/* =========================================================
+   5. ESTRUCTURA GENERAL DE LA APP
+   ========================================================= */
+
+/*
+.app-shell es la estructura principal.
+Divide la pantalla en dos:
+- izquierda: sidebar
+- derecha: contenido
+*/
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  height: 100vh;
+}
+
+/*
+grid-template-columns:
+- 260px para menú lateral
+- el resto para contenido
+
+100vh = toda la altura visible de la pantalla
+*/
+
+
+/* =========================================================
+   6. SIDEBAR
+   ========================================================= */
+
+/*
+La sidebar es la barra lateral izquierda.
+Aquí están usuario, navegación y proyectos.
+*/
+
+.sidebar {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/*
+display:flex + flex-direction:column
+= coloca los elementos uno debajo de otro
+*/
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/*
+Los botones del menú también van en columna.
+*/
+
+.nav-btn {
+  width: 100%;
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+}
+
+/*
+Estos son los botones del menú lateral.
+border-radius: 999px hace que queden tipo pastilla.
+*/
+
+.nav-btn.active {
+  background: rgba(56, 189, 248, 0.25);
+}
+
+/*
+El botón activo se pinta distinto para que el usuario
+sepa dónde está.
+*/
+
+
+/* =========================================================
+   7. CONTENIDO PRINCIPAL
+   ========================================================= */
+
+/*
+.main-content es la parte grande de la derecha.
+Aquí se ven las tabs como Bandeja, Pizarra, Ajustes...
+*/
+
+.main-content {
+  padding: 1rem 1.3rem 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+overflow: hidden oculta cosas que se salgan del contenedor.
+Esto va bien a veces, pero si el alto está mal calculado,
+puede esconder contenido sin querer.
+*/
+
+
+/* =========================================================
+   8. TABS Y CORRECCIÓN DEL PROBLEMA DE ALTURA
+   ========================================================= */
+
+/*
+Esta clase fue una de las claves del arreglo.
+
+ANTES:
+height fijo -> demasiado rígido
+
+AHORA:
+height auto + min-height -> más flexible
+*/
+
+.tab-content {
+  height: auto;
+  min-height: calc(100vh - 90px);
+  overflow: hidden;
+}
+
+/*
+Qué significa:
+- height: auto -> deja que la caja crezca sola
+- min-height -> como mínimo tendrá esta altura
+- overflow: hidden -> no muestra lo que sobresale
+
+Esto evita que la pestaña se fuerce demasiado.
+*/
+
+
+/* =========================================================
+   9. GRID PRINCIPAL DE CADA TAB
+   ========================================================= */
+
+/*
+.layout-grid organiza paneles grandes dentro de una pestaña.
+Por ejemplo:
+- izquierda: formulario
+- derecha: estadísticas o panel secundario
+*/
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 0.9rem;
+  height: auto;
+  max-height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+/*
+Explicación fácil:
+- dos columnas
+- la izquierda un poco más ancha
+- la derecha un poco más estrecha
+- separación entre ellas
+- altura flexible, pero con un límite razonable
+
+Este cambio arregló parte del problema de diseño.
+Antes estaba demasiado rígido.
+*/
+
+
+/* =========================================================
+   10. PANELES BONITOS
+   ========================================================= */
+
+/*
+.glass-panel es el estilo base de muchas cajas grandes.
+Ejemplo: formulario, analítica, árbol, paneles informativos.
+*/
+
+.glass-panel {
+  border-radius: 1.2rem;
+  padding: 0.85rem 0.9rem;
+  overflow: hidden;
+}
+
+/*
+Es el “marco bonito” del panel.
+No coloca elementos; solo les da estilo de caja.
+*/
+
+
+/* =========================================================
+   11. FORMULARIO DE TAREAS
+   ========================================================= */
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/*
+Esto coloca campos uno debajo del otro
+dejando aire entre ellos.
+*/
+
+.task-form input,
+.task-form select {
+  border-radius: 0.75rem;
+  padding: 0.4rem 0.6rem;
+}
+
+/*
+Aquí se estilizan cajas de texto y selects.
+*/
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+/*
+form-row sirve para poner dos campos en la misma línea.
+Ejemplo:
+- tiempo
+- energía
+*/
+
+
+/* =========================================================
+   12. GRID DE TAREAS EN BANDEJA
+   ========================================================= */
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+  gap: 0.6rem;
+}
+
+/*
+auto-fill = mete tantas columnas como quepan
+minmax(235px, 1fr) =
+- mínimo 235px por tarjeta
+- si sobra espacio, crecen
+*/
+
+
+/* =========================================================
+   13. KANBAN GENERAL
+   ========================================================= */
+
+/*
+La pizarra tipo kanban usa varias capas:
+- wrapper
+- columnas
+- tarjetas
+*/
+
+.kanban-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+}
+
+.kanban-columns {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+/*
+Aquí creas 3 columnas iguales.
+Muy útil para “Algún día”, “Esta semana” y “Hoy”.
+*/
+
+.kanban-column {
+  border-radius: 1rem;
+  padding: 0.55rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/*
+Cada columna es una caja grande que contiene tarjetas.
+*/
+
+
+/* =========================================================
+   14. TARJETAS DE TAREA
+   ========================================================= */
+
+.kanban-card {
+  border-radius: 0.9rem;
+  padding: 0.55rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  cursor: grab;
+}
+
+/*
+Cada tarea es una tarjeta.
+cursor: grab hace que parezca arrastrable.
+*/
+
+.kanban-card.dragging {
+  opacity: 0.9;
+}
+
+/*
+Cuando arrastras una tarjeta, se ve un poco diferente.
+Eso mejora la sensación visual del drag & drop.
+*/
+
+
+/* =========================================================
+   15. TASK DECAY - TAREA VIEJA
+   ========================================================= */
+
+/*
+Esta clase es nueva y conecta con el JS:
+si la tarea lleva más de 14 días en “Algún día”,
+el JS le añade class="task-old".
+*/
+
+.kanban-card.task-old {
+  border-color: rgba(248, 113, 113, 0.9);
+  position: relative;
+}
+
+/*
+Se pinta con aspecto de “atención”.
+*/
+
+.kanban-card.task-old::before {
+  content: "⏳ +14d";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.65rem;
+}
+
+/*
+::before crea una etiqueta falsa visual
+sin meterla en el HTML.
+Muy útil para detalles como esta marca.
+*/
+
+
+/* =========================================================
+   16. BOTONES DE CADA TARJETA
+   ========================================================= */
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+/*
+Esto alinea los botones de acción:
+ejecutar, editar, completar, borrar
+*/
+
+.card-actions button {
+  border-radius: 999px;
+  padding: 0.27rem 0.55rem;
+  cursor: pointer;
 }
 
 
-/* ================================
-   NAV
-================================ */
-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.2rem 3rem;
-    background: rgba(13, 13, 18, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-borde);
-    transition: all 0.3s ease;
+/* =========================================================
+   17. ETIQUETAS TIPO PILL
+   ========================================================= */
+
+.pill {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.66rem;
 }
 
-/* Logo / nombre en el nav */
-nav h1 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-acento);
-    letter-spacing: -0.02em;
+/*
+Estas son las mini-etiquetas:
+video, curso, proyecto, artículo...
+*/
+
+
+/* =========================================================
+   18. RUTINAS / HÁBITOS
+   ========================================================= */
+
+.habits-panel {
+  margin-top: 0.7rem;
+  padding-top: 0.4rem;
 }
 
-/* Lista de links */
-nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
+#habitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-nav ul a {
-    color: var(--color-texto-suave);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
-    position: relative;
+.habit-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Línea animada debajo del link */
-nav ul a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0%;
-    height: 1px;
-    background: var(--color-acento);
-    transition: width 0.25s ease;
+/*
+Aquí se monta la zona de rutinas del día.
+Cada hábito es como una fila compacta.
+*/
+
+
+/* =========================================================
+   19. HISTORIAL
+   ========================================================= */
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-nav ul a:hover {
-    color: var(--color-texto);
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-nav ul a:hover::after {
-    width: 100%;
+/*
+Esto sirve para mostrar tareas completadas o historial.
+*/
+
+
+/* =========================================================
+   20. ESTADÍSTICAS
+   ========================================================= */
+
+.stats-row {
+  display: flex;
+  gap: 0.5rem;
 }
 
-/* Botón menú móvil (oculto en desktop) */
-.boton-del-salami {
+.stat-card {
+  flex: 1;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.9rem;
+}
+
+/*
+Crea las cajitas pequeñas de:
+- rango
+- tiempo
+- completadas
+*/
+
+
+/* =========================================================
+   21. ÁRBOL DE PROGRESO
+   ========================================================= */
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tree-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+}
+
+.tree-bar {
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.tree-fill {
+  height: 100%;
+  width: 0;
+}
+
+/*
+Aquí tienes una lógica parecida a una barra de experiencia.
+- tree-bar = barra vacía
+- tree-fill = barra que se rellena
+*/
+
+
+/* =========================================================
+   22. HEATMAP
+   ========================================================= */
+
+.heatmap {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.heatmap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.heatmap-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+/*
+Cada celda es un cuadrito del mapa de constancia.
+Luego el JS le pone data-level="1", "2", etc.
+*/
+
+.heatmap-cell[data-level="1"] { }
+.heatmap-cell[data-level="2"] { }
+.heatmap-cell[data-level="3"] { }
+.heatmap-cell[data-level="4"] { }
+
+/*
+Cuanto más nivel, más intenso el color.
+*/
+
+
+/* =========================================================
+   23. RESPUESTA DE IA
+   ========================================================= */
+
+.ai-response-card {
+  border-radius: 0.8rem;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+/*
+Este panel muestra la respuesta de Groq/IA.
+max-height evita que crezca infinito.
+overflow-y: auto pone scroll vertical si hace falta.
+*/
+
+
+/* =========================================================
+   24. FOCUS MODE
+   ========================================================= */
+
+/*
+El overlay de enfoque tapa la pantalla
+para centrar al usuario en una sola tarea.
+*/
+
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+.focus-card {
+  width: min(380px, 100%);
+  padding: 1.8rem 1.4rem;
+  border-radius: 1.5rem;
+  text-align: center;
+}
+
+/*
+focus-card es la caja central del modo enfoque.
+*/
+
+
+/* =========================================================
+   25. AJUSTES
+   ========================================================= */
+
+.settings-block {
+  padding: 0.6rem 0.7rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/*
+Son las cajas del apartado ajustes:
+API key, exportar datos, etc.
+*/
+
+
+/* =========================================================
+   26. NOTIFICACIONES
+   ========================================================= */
+
+.notif-panel {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  width: 260px;
+  max-height: 340px;
+  z-index: 999;
+}
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+}
+
+.notif-item {
+  font-size: 0.75rem;
+}
+
+/*
+Esto crea el panel flotante de avisos.
+*/
+
+
+/* =========================================================
+   27. FAB - QUICK ADD
+   ========================================================= */
+
+/*
+Esta es otra parte nueva e importante.
+FAB significa Floating Action Button.
+Es el botón redondo con + para crear tareas rápido.
+*/
+
+.fab-add {
+  position: fixed;
+  bottom: 1.4rem;
+  right: 1.4rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  font-size: 1.4rem;
+  z-index: 950;
+}
+
+/*
+Qué hace:
+- fixed -> siempre visible
+- bottom/right -> abajo a la derecha
+- width/height -> tamaño del botón
+- border-radius grande -> círculo
+*/
+
+
+/* =========================================================
+   28. OCULTAR ELEMENTOS
+   ========================================================= */
+
+.hidden {
+  display: none !important;
+}
+
+/*
+Clase universal para ocultar cosas.
+La usa mucho el JS para mostrar/ocultar modales, tabs, etc.
+*/
+
+
+/* =========================================================
+   29. RESPONSIVE
+   ========================================================= */
+
+/*
+Aquí se cambia el diseño cuando la pantalla se hace pequeña.
+Muy importante para móvil y tablet.
+*/
+
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
     display: none;
-    background: transparent;
-    border: 1px solid var(--color-borde);
-    color: var(--color-texto);
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: 0.2s;
+  }
+
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kanban-columns {
+    grid-template-columns: 1fr;
+  }
 }
 
-.boton-del-salami:hover {
-    border-color: var(--color-acento);
-    color: var(--color-acento);
+/*
+Explicación:
+- la sidebar desaparece
+- todo pasa a una sola columna
+- el kanban también se apila
+
+Esto evita que en móvil se vea todo apretado.
+*/
+
+@media (max-width: 640px) {
+  .tasks-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* ================================
-   SECCIONES BASE
-================================ */
-section {
-    padding: 6rem 3rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-/* ================================
-   HERO
-================================ */
-#hero {
-    min-height: 100vh;
-    max-width: 100%;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Fondo con gradiente morado sutil */
-#hero::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -20%;
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.12), transparent 65%);
-    pointer-events: none;
-}
-
-.hero-contenido {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4rem;
-    max-width: 1000px;
-    width: 100%;
-    padding: 0 3rem;
-}
-
-/* Texto del hero */
-.hero-texto {
-    flex: 1;
-}
-
-.hero-saludo {
-    font-size: 1rem;
-    color: var(--color-acento);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-}
-
-.hero-nombre {
-    font-size: clamp(3rem, 6vw, 5rem);
-    font-weight: 800;
-    color: var(--color-texto);
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    margin-bottom: 1rem;
-}
-
-/* El nombre "Claudio" en morado */
-.hero-nombre span {
-    color: var(--color-acento);
-}
-
-.hero-descripcion {
-    font-size: 1.1rem;
-    color: var(--color-texto-suave);
-    max-width: 480px;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-}
-
-/* Botones del hero */
-.hero-botones {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.btn-primario {
-    background: var(--color-acento);
-    color: white;
-    padding: 0.8rem 1.8rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
-}
-
-.btn-primario:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(168, 85, 247, 0.5);
-    background: #9333ea;
-}
-
-.btn-secundario {
-    background: transparent;
-    color: var(--color-texto);
-    padding: 0.8rem 1.8rem;
-    border-radius: 10px;
-    border: 1px solid var(--color-borde);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-}
-
-.btn-secundario:hover {
-    border-color: var(--color-acento);
-    color: var(--color-acento);
-    transform: translateY(-3px);
-}
-
-/* Foto del hero */
-.hero-foto {
-    flex-shrink: 0;
-}
-
-.hero-foto img {
-    width: 320px;
-    height: 380px;
-    object-fit: cover;
-    border-radius: 24px;
-    border: 1px solid var(--color-borde);
-    box-shadow: var(--sombra);
-    filter: grayscale(15%);
-    transition: filter 0.3s ease;
-}
-
-.hero-foto img:hover {
-    filter: grayscale(0%);
-}
-
-/* ================================
-   SOBRE MÍ
-================================ */
-#sobremi {
-    padding-top: 8rem;
-}
-
-.sobremi-contenido {
-    display: flex;
-    align-items: flex-start;
-    gap: 4rem;
-}
-
-.sobremi-foto img {
-    width: 260px;
-    height: 320px;
-    object-fit: cover;
-    border-radius: var(--radio);
-    border: 1px solid var(--color-borde);
-    box-shadow: var(--sombra);
-    flex-shrink: 0;
-}
-
-.sobremi-texto {
-    flex: 1;
-}
-
-/* Título de sección (etiqueta pequeña morada) */
-.seccion-tag {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-acento);
-    background: var(--color-acento-suave);
-    border: 1px solid var(--color-acento-borde);
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    margin-bottom: 1.2rem;
-}
-
-.seccion-titulo {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--color-texto);
-    letter-spacing: -0.03em;
-    margin-bottom: 1.2rem;
-    line-height: 1.2;
-}
-
-.sobremi-texto p {
-    color: var(--color-texto-suave);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 1rem;
-}
-
-/* Tags de skills */
-.skills-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-}
-
-.skill-tag {
-    background: var(--color-card);
-    border: 1px solid var(--color-borde);
-    color: var(--color-texto-suave);
-    padding: 0.35rem 0.8rem;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    transition: 0.2s;
-}
-
-.skill-tag:hover {
-    border-color: var(--color-acento);
-    color: var(--color-acento);
-}
-
-/* ================================
-   PROYECTOS
-================================ */
-#proyectos {
-    padding-top: 6rem;
-}
-
-.proyectos-header {
-    margin-bottom: 3rem;
-}
-
-.proyectos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    gap: 1.5rem;
-}
-
-/* Card de proyecto */
-.proyecto-card {
-    background: var(--color-card);
-    border: 1px solid var(--color-borde);
-    border-radius: var(--radio);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.proyecto-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--color-acento-borde);
-    box-shadow: 0 20px 50px rgba(168, 85, 247, 0.15);
-}
-
-/* Imagen del proyecto */
-.proyecto-imagen {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid var(--color-borde);
-    transition: transform 0.3s ease;
-}
-
-.proyecto-card:hover .proyecto-imagen {
-    transform: scale(1.02);
-}
-
-.proyecto-info {
-    padding: 1.5rem;
-}
-
-.proyecto-info h3 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--color-texto);
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
-}
-
-.proyecto-info p {
-    color: var(--color-texto-suave);
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-}
-
-/* Link del proyecto */
-.proyecto-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--color-acento);
-    text-decoration: none;
-    font-size: 0.88rem;
-    font-weight: 600;
-    transition: gap 0.2s ease;
-}
-
-.proyecto-link::after {
-    content: '→';
-    transition: transform 0.2s ease;
-}
-
-.proyecto-link:hover::after {
-    transform: translateX(4px);
-}
-
-/* ================================
-   CONTACTO
-================================ */
-#contacto {
-    padding-top: 6rem;
-    padding-bottom: 8rem;
-    text-align: center;
-    max-width: 600px;
-}
-
-.contacto-mensaje {
-    color: var(--color-texto-suave);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-}
-
-.contacto-email {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--color-texto);
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    background: var(--color-card);
-    border: 1px solid var(--color-borde);
-    padding: 0.8rem 1.5rem;
-    border-radius: 10px;
-    transition: all 0.2s ease; 
-}
+/*
+En pantallas muy pequeñas, las tarjetas se ponen una debajo de otra.
+*/
