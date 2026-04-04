@@ -1,45 +1,147 @@
+/* ================================================
+   IMPORTAR FUENTE
+   ================================================
+   Esto carga la fuente "Inter" desde Google Fonts.
+   IMPORTANTE: el @import SIEMPRE tiene que ser la
+   primera línea del archivo CSS, antes de cualquier
+   otra cosa. Si lo pones en otro sitio, el navegador
+   lo ignora y usa la fuente por defecto del sistema.
+================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+
+/* ================================================
+   VARIABLES GLOBALES (:root)
+   ================================================
+   :root es el elemento raíz de toda la página (el <html>).
+   Aquí defines variables CSS (también llamadas "custom properties").
+   Una variable CSS empieza siempre con dos guiones: --nombre.
+
+   ¿Para qué sirven?
+   En vez de escribir el color morado (#8b5cf6) en 50 sitios
+   distintos, lo guardas UNA vez aquí y lo reutilizas con
+   var(--color-acento) en todo el archivo.
+   Si quieres cambiar el morado a otro color, solo cambias
+   esta línea y se actualiza en toda la página automáticamente.
+================================================ */
 :root {
-  --color-fondo: #0d0d12;
-  --color-card: #13131a;
-  --color-borde: rgba(139, 92, 246, 0.2);
-  --color-acento: #8b5cf6;
-  --color-acento2: #a78bfa;
-  --color-texto: #e2e8f0;
-  --color-texto-muted: #94a3b8;
-  --color-header: rgba(13, 13, 18, 0.92);
+  --color-fondo:       #0d0d12;              /* Fondo principal de la página (negro azulado muy oscuro) */
+  --color-card:        #13131a;              /* Fondo de las tarjetas/cards (un poco más claro que el fondo) */
+  --color-borde:       rgba(139, 92, 246, 0.2); /* Borde morado semitransparente. rgba = rojo, verde, azul, opacidad */
+  --color-acento:      #8b5cf6;              /* Morado principal (botones, títulos importantes) */
+  --color-acento2:     #a78bfa;              /* Morado más claro (textos secundarios, hover) */
+  --color-texto:       #e2e8f0;              /* Color del texto general (blanco suave, no puro) */
+  --color-texto-muted: #94a3b8;              /* Texto apagado/secundario (gris azulado) */
+  --color-header:      rgba(13, 13, 18, 0.92); /* Fondo del header con transparencia para el efecto blur */
 }
 
+
+/* ================================================
+   RESET GENERAL
+   ================================================
+   Los navegadores aplican estilos por defecto a los
+   elementos HTML (márgenes, paddings, etc.) y cada
+   navegador los aplica de forma ligeramente diferente.
+   
+   Este bloque los "resetea" (pone a cero) para que
+   todos los navegadores partan del mismo punto y no
+   haya sorpresas de diseño.
+
+   box-sizing: border-box → hace que el ancho/alto
+   de un elemento incluya el padding y el borde.
+   Sin esto, si pones width: 200px y le añades
+   padding: 20px, el elemento mide 240px. Con
+   border-box, siempre mide exactamente 200px.
+================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+
+/* ================================================
+   HTML Y BODY
+   ================================================
+   html → el elemento raíz de todo el documento.
+   scroll-behavior: smooth hace que cuando el usuario
+   pulsa un enlace tipo href="#proyectos" no salte
+   bruscamente, sino que haga scroll suave hasta ahí.
+
+   body → el cuerpo visible de la página.
+   Aquí se definen los estilos base que heredan
+   todos los elementos: fondo, color de texto y fuente.
+   line-height: 1.6 añade espacio entre líneas de texto
+   para que sea más cómodo de leer.
+================================================ */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  font-family: 'Inter', system-ui, sans-serif;
-  line-height: 1.6;
+  background-color: var(--color-fondo);       /* Fondo negro oscuro de toda la página */
+  color: var(--color-texto);                  /* Color de texto blanco suave por defecto */
+  font-family: 'Inter', system-ui, sans-serif; /* Fuente Inter. Si no carga, usa la del sistema */
+  line-height: 1.6;                           /* Espacio entre líneas (160% del tamaño de fuente) */
 }
 
+
+/* ================================================
+   ENLACES (etiqueta <a>)
+   ================================================
+   Por defecto el navegador pone los enlaces en azul
+   y subrayados. Aquí lo quitamos para tener control
+   total del diseño de cada enlace.
+   
+   color: inherit → hereda el color del elemento padre
+   text-decoration: none → quita el subrayado
+================================================ */
 a {
   color: inherit;
   text-decoration: none;
 }
 
+
+/* ================================================
+   IMÁGENES (etiqueta <img>)
+   ================================================
+   max-width: 100% → la imagen nunca se saldrá del
+   contenedor, aunque sea más grande que él.
+   
+   display: block → las imágenes por defecto son
+   inline, lo que puede dejar un hueco pequeño abajo.
+   Con block se elimina ese hueco.
+   
+   border-radius: 1rem → esquinas redondeadas por defecto
+   para todas las imágenes.
+================================================ */
 img {
   max-width: 100%;
   display: block;
   border-radius: 1rem;
 }
 
-/* ===== HEADER / NAV ===== */
+
+/* ================================================
+   HEADER (barra de navegación superior)
+   ================================================
+   El header contiene el logo "Claudio" y los enlaces
+   del menú. Lo hacemos fijo en la parte superior.
+
+   position: fixed → se queda pegado arriba aunque
+   el usuario haga scroll. No se mueve.
+   
+   top: 0 → pegado al borde superior de la pantalla.
+   width: 100% → ocupa todo el ancho.
+   z-index: 100 → se coloca por encima de otros elementos.
+   Cuanto mayor el número, más al frente aparece.
+   
+   backdrop-filter: blur(10px) → efecto de desenfoque
+   del contenido que hay detrás (efecto cristal).
+   
+   display: flex + justify-content: space-between →
+   coloca el logo a la izquierda y el menú a la derecha.
+================================================ */
 header {
   position: fixed;
   top: 0;
@@ -54,31 +156,53 @@ header {
   justify-content: space-between;
 }
 
+/* El h1 dentro del header es el logo/nombre "Claudio" */
 header h1 {
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--color-acento2);
+  color: var(--color-acento2); /* Morado claro */
 }
 
+
+/* ================================================
+   NAVEGACIÓN (nav y ul)
+   ================================================
+   La lista <ul> del menú la convertimos en fila
+   horizontal usando flexbox.
+   
+   list-style: none → quita los puntos de la lista.
+   display: flex → coloca los > en fila.
+   gap: 2rem → espacio de 2rem entre cada enlace.
+================================================ */
 nav ul {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
+/* Los enlaces del menú */
 nav ul a {
-  color: var(--color-texto-muted);
+  color: var(--color-texto-muted); /* Gris por defecto */
   font-size: 0.95rem;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.2s; /* Anima el cambio de color suavemente en 0.2 segundos */
 }
 
+/* Cuando el ratón pasa por encima, se pone morado claro */
 nav ul a:hover {
   color: var(--color-acento2);
 }
 
+
+/* ================================================
+   BOTÓN MENÚ MÓVIL (.boton-del-salami)
+   ================================================
+   Este botón solo aparece en pantallas pequeñas.
+   En desktop está oculto con display: none.
+   En el @media de móvil más abajo lo activamos.
+================================================ */
 .boton-del-salami {
-  display: none;
+  display: none; /* Oculto en desktop */
   background: none;
   border: 1px solid var(--color-borde);
   color: var(--color-texto);
@@ -88,13 +212,26 @@ nav ul a:hover {
   font-size: 0.9rem;
 }
 
+/* El div que envuelve el ul y el botón del menú */
 .menu-de-mierda {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-/* ===== MAIN ===== */
+
+/* ================================================
+   MAIN Y SECTIONS
+   ================================================
+   Como el header es fixed (flota encima del contenido),
+   el main necesita un padding-top para que el primer
+   contenido no quede tapado por el header.
+   
+   Cada section tiene padding arriba/abajo para que
+   las secciones respiren y no estén pegadas.
+   max-width: 1100px + margin: 0 auto → centra el
+   contenido y limita su ancho en pantallas grandes.
+================================================ */
 main {
   padding-top: 80px;
 }
@@ -102,10 +239,22 @@ main {
 section {
   padding: 5rem 2rem;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 0 auto; /* Margen automático a los lados = centra el elemento */
 }
 
-/* ===== HERO ===== */
+
+/* ================================================
+   SECCIÓN HERO (#hero)
+   ================================================
+   El hero es la primera sección grande que ves al
+   entrar a la web. Ocupa casi toda la pantalla.
+   
+   min-height: 90vh → altura mínima del 90% de la
+   ventana del navegador (vh = viewport height).
+   
+   display: flex + align-items: center → centra el
+   contenido verticalmente dentro del hero.
+================================================ */
 #hero {
   min-height: 90vh;
   display: flex;
@@ -113,6 +262,15 @@ section {
   padding-top: 6rem;
 }
 
+/* 
+   El contenido del hero se divide en DOS columnas:
+   - Izquierda: texto (nombre, rol, descripción, botones)
+   - Derecha: foto
+   
+   display: grid + grid-template-columns: 1fr 1fr →
+   dos columnas de igual tamaño.
+   gap: 3rem → espacio entre las dos columnas.
+*/
 .hero-contenido {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -121,6 +279,7 @@ section {
   width: 100%;
 }
 
+/* "Hola, soy" - texto pequeño encima del nombre */
 .hero-saludo {
   color: var(--color-acento2);
   font-size: 1rem;
@@ -128,6 +287,17 @@ section {
   margin-bottom: 0.5rem;
 }
 
+/* 
+   El nombre grande "Claudio".
+   clamp(2.5rem, 6vw, 4rem) → tamaño de fuente fluido:
+   - mínimo: 2.5rem (en pantallas pequeñas)
+   - preferido: 6vw (se adapta al ancho de pantalla)
+   - máximo: 4rem (en pantallas grandes)
+   
+   El gradiente con -webkit-background-clip y
+   -webkit-text-fill-color crea el efecto de texto
+   con degradado de color (de blanco a morado).
+*/
 .hero-nombre {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
@@ -139,6 +309,7 @@ section {
   margin-bottom: 0.5rem;
 }
 
+/* "Estudiante de Economía & Desarrollador Web" */
 .hero-rol {
   font-size: 1.2rem;
   color: var(--color-acento);
@@ -146,6 +317,7 @@ section {
   margin-bottom: 1rem;
 }
 
+/* Párrafo descriptivo */
 .hero-descripcion {
   color: var(--color-texto-muted);
   font-size: 1rem;
@@ -153,12 +325,14 @@ section {
   margin-bottom: 2rem;
 }
 
+/* Contenedor de los botones "Ver proyectos" y "Contacto" */
 .hero-botones {
   display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Si no caben en una fila, se ponen en dos */
 }
 
+/* Botón principal (relleno morado) */
 .btn-primario {
   background: var(--color-acento);
   color: #fff;
@@ -171,9 +345,10 @@ section {
 
 .btn-primario:hover {
   opacity: 0.85;
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Sube 2px al pasar el ratón */
 }
 
+/* Botón secundario (solo borde, sin relleno) */
 .btn-secundario {
   border: 1px solid var(--color-borde);
   color: var(--color-texto);
@@ -189,21 +364,30 @@ section {
   transform: translateY(-2px);
 }
 
+/* Contenedor de la foto del hero (columna derecha) */
 .hero-foto-container {
   display: flex;
   justify-content: center;
 }
 
+/* La foto en sí */
 .hero-foto-container img {
   width: 340px;
   height: 400px;
-  object-fit: cover;
+  object-fit: cover; /* La imagen rellena el espacio sin deformarse */
   border-radius: 1.5rem;
   border: 2px solid var(--color-borde);
-  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.15); /* Sombra morada suave */
 }
 
-/* ===== SOBRE MI ===== */
+
+/* ================================================
+   SECCIÓN SOBRE MÍ (#sobremi)
+   ================================================
+   Similar al hero: dos columnas, foto a un lado
+   y texto al otro. La línea border-top sirve
+   de separador visual entre secciones.
+================================================ */
 #sobremi {
   border-top: 1px solid var(--color-borde);
 }
@@ -211,223 +395,3 @@ section {
 .sobremi-contenido {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.sobremi-foto img {
-  width: 100%;
-  max-width: 380px;
-  border-radius: 1.5rem;
-  border: 2px solid var(--color-borde);
-}
-
-.sobremi-titulo {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-
-.sobremi-descripcion {
-  color: var(--color-texto-muted);
-  margin-bottom: 1rem;
-  font-size: 0.98rem;
-}
-
-.sobremi-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.sobremi-skills span {
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid var(--color-borde);
-  color: var(--color-acento2);
-  padding: 0.3rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-/* ===== PROYECTOS ===== */
-#proyectos {
-  border-top: 1px solid var(--color-borde);
-}
-
-.proyectos-titulo {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 3rem;
-  color: #fff;
-}
-
-.proyectos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.proyecto-card {
-  background: var(--color-card);
-  border: 1px solid var(--color-borde);
-  border-radius: 1.2rem;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.proyecto-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.15);
-}
-
-.proyecto-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-.proyecto-info {
-  padding: 1.2rem;
-}
-
-.proyecto-info h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #fff;
-}
-
-.proyecto-info p {
-  color: var(--color-texto-muted);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.btn-proyecto {
-  display: inline-block;
-  background: var(--color-acento);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 0.6rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: opacity 0.2s;
-}
-
-.btn-proyecto:hover {
-  opacity: 0.85;
-}
-
-/* ===== CONTACTO ===== */
-#contacto {
-  border-top: 1px solid var(--color-borde);
-  text-align: center;
-}
-
-.contacto-titulo {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-
-.contacto-descripcion {
-  color: var(--color-texto-muted);
-  font-size: 1rem;
-  margin-bottom: 2rem;
-}
-
-.contacto-email {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-acento2);
-  font-size: 1.1rem;
-  font-weight: 600;
-  border: 1px solid var(--color-borde);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  transition: background 0.2s;
-}
-
-.contacto-email:hover {
-  background: rgba(139, 92, 246, 0.1);
-}
-
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 2rem;
-  color: var(--color-texto-muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--color-borde);
-}
-
-/* ===== RESPONSIVE MOVIL ===== */
-@media (max-width: 768px) {
-  header {
-    padding: 1rem;
-  }
-
-  nav ul {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background: var(--color-card);
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--color-borde);
-  }
-
-  nav ul.abierto {
-    display: flex;
-  }
-
-  .menu-de-mierda {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .boton-del-salami {
-    display: block;
-  }
-
-  .hero-contenido {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .hero-foto-container {
-    order: -1;
-  }
-
-  .hero-foto-container img {
-    width: 220px;
-    height: 260px;
-    margin: 0 auto;
-  }
-
-  .hero-botones {
-    justify-content: center;
-  }
-
-  .sobremi-contenido {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .sobremi-skills {
-    justify-content: center;
-  }
-
-  .proyectos-grid {
-    grid-template-columns: 1fr;
-  }
-}
