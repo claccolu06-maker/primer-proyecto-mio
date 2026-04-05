@@ -198,7 +198,7 @@ nav ul a:hover {
    BOTÓN MENÚ MÓVIL (.boton-del-salami)
    ================================================
    Este botón solo aparece en pantallas pequeñas.
-   En desktop está oculto con display: none.Esto lo dejamos como tarea para ahora.
+   En desktop está oculto con display: none.
    En el @media de móvil más abajo lo activamos.
 ================================================ */
 .boton-del-salami {
@@ -229,6 +229,8 @@ nav ul a:hover {
    
    Cada section tiene padding arriba/abajo para que
    las secciones respiren y no estén pegadas.
+   max-width: 1100px + margin: 0 auto → centra el
+   contenido y limita su ancho en pantallas grandes.
 ================================================ */
 main {
   padding-top: 80px;
@@ -236,7 +238,7 @@ main {
 
 section {
   padding: 5rem 2rem;
-  max-width: 1100px;/* max-width: 1100px + margin: 0 auto → centra el contenido y limita su ancho en pantallas grandes.*/
+  max-width: 1100px;
   margin: 0 auto; /* Margen automático a los lados = centra el elemento */
 }
 
@@ -370,8 +372,8 @@ section {
 
 /* La foto en sí */
 .hero-foto-container img {
-  width: 300px;
-  height: 350px;
+  width: 340px;
+  height: 400px;
   object-fit: cover; /* La imagen rellena el espacio sin deformarse */
   border-radius: 1.5rem;
   border: 2px solid var(--color-borde);
