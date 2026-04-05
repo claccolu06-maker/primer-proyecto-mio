@@ -1,81 +1,282 @@
 <!DOCTYPE html>
+<!--
+Esto le dice al navegador que el documento es HTML5.
+Es como decirle: “lee esta página con las reglas modernas”.
+-->
+
 <html lang="es">
+<!--
+Aquí empieza toda la página.
+lang="es" indica que el idioma principal es español.
+Eso ayuda al navegador, accesibilidad y SEO.
+-->
+
 <head>
+    <!--
+    HEAD = la parte “invisible” de la página.
+    Aquí van los datos importantes, pero no el contenido visual.
+    -->
+
     <title>Claudio | Portfolio</title>
+    <!--
+    Este es el título que aparece en la pestaña del navegador.
+    -->
+
     <meta charset="UTF-8">
+    <!--
+    Esto permite usar bien tildes, ñ, símbolos, etc.
+    Muy importante para que no salgan caracteres raros.
+    -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+    Esto hace que la web se adapte bien en móvil.
+    Sin esto, en teléfono muchas webs se ven en miniatura.
+    -->
+
     <meta name="description" content="Portfolio de Claudio, estudiante de Economía y desarrollador web">
+    <!--
+    Descripción breve de tu página.
+    Sirve sobre todo para Google y SEO.
+    -->
+
     <link rel="stylesheet" href="style.css">
+    <!--
+    Aquí conectas tu HTML con tu archivo CSS.
+    Si esta ruta está mal, la web sale “sin ropa”,
+    o sea, casi sin estilos.
+    -->
 </head>
+
 <body>
+    <!--
+    BODY = todo lo visible de la página.
+    Aquí metes el contenido real que ve el usuario.
+    -->
 
     <!-- NAV FIJO -->
     <header>
+        <!--
+        header es la cabecera de la web.
+        Normalmente contiene logo/nombre y menú.
+        -->
+
         <h1>Claudio</h1>
+        <!--
+        Este h1 actúa como título principal del sitio.
+        Ojo: luego tienes otro h1 en el hero.
+        Lo ideal en una página suele ser tener SOLO un h1 principal.
+        -->
+
         <nav>
+            <!--
+            nav significa navegación.
+            Aquí van los enlaces principales del menú.
+            -->
+
             <div class="menu-de-mierda">
+                <!--
+                Este div agrupa el menú.
+                Técnicamente funciona, pero el nombre de la clase
+                conviene cambiarlo por uno más limpio y profesional,
+                por ejemplo: menu-principal o nav-menu.
+                -->
+
                 <ul>
+                    <!--
+                    ul = lista desordenada.
+                    En menús, lo correcto es que dentro haya <li>.
+                    -->
+
                     ><a href="#hero">Inicio</a></li>
                     ><a href="#sobremi">Sobre mí</a></li>
                     ><a href="#proyectos">Proyectos</a></li>
                     ><a href="#contacto">Contacto</a></li>
+
+                    <!--
+                    AQUÍ ESTÁ UNO DE LOS ERRORES GRANDES.
+
+                    Esto está mal escrito porque:
+                    1. has puesto ">" suelto al principio
+                    2. no has abierto <li>
+                    3. sí cierras </li>, pero sin haberlo abierto
+
+                    Así debería estar bien:
+                    <li><a href="#hero">Inicio</a></li>
+                    <li><a href="#sobremi">Sobre mí</a></li>
+                    etc.
+
+                    Este fallo puede romper cómo se ve el menú.
+                    -->
                 </ul>
+
                 <button class="boton-del-salami">Menú</button>
+                <!--
+                Este botón probablemente es para móvil.
+                Ahora mismo solo existe visualmente.
+                Si quieres que abra/cierre el menú, luego necesitarás JS.
+                También conviene cambiarle el nombre a algo más claro:
+                boton-menu o menu-toggle.
+                -->
             </div>
         </nav>
     </header>
 
     <main>
+        <!--
+        main es la zona principal de la página.
+        Dentro van tus secciones importantes.
+        -->
 
         <!-- HERO -->
         <section id="hero">
+            <!--
+            Esta es la sección principal de bienvenida.
+            id="hero" permite que el enlace del menú
+            haga scroll hasta aquí con href="#hero".
+            -->
+
             <div class="hero-contenido">
+                <!--
+                Contenedor general del hero.
+                Normalmente sirve para dividir:
+                - texto a un lado
+                - imagen al otro
+                -->
+
                 <div class="hero-texto">
+                    <!--
+                    Parte izquierda o textual del hero.
+                    -->
+
                     <p class="hero-saludo">Hola, soy</p>
+                    <!--
+                    Un texto corto introductorio.
+                    -->
+
                     <h1 class="hero-nombre">Claudio</h1>
+                    <!--
+                    Este sería mejor candidato para ser el único h1 de la página.
+                    Porque representa el título principal real del hero.
+                    -->
+
                     <h2 class="hero-rol">Estudiante de Economía & Desarrollador Web</h2>
+                    <!--
+                    Subtítulo principal con tu rol.
+                    -->
+
                     <p class="hero-descripcion">
                         Construyo herramientas digitales que combinan
                         el mundo financiero con el desarrollo web.
                         Basado en Sevilla, España.
                     </p>
+                    <!--
+                    Descripción breve de quién eres y qué haces.
+                    Muy útil porque resume tu perfil rápidamente.
+                    -->
+
                     <div class="hero-botones">
+                        <!--
+                        Caja para agrupar botones/links de acción.
+                        -->
+
                         <a href="#proyectos" class="btn-primario">Ver proyectos</a>
+                        <!--
+                        Este enlace baja a la sección de proyectos.
+                        Tiene clase de botón, aunque técnicamente es un <a>.
+                        -->
+
                         <a href="#contacto" class="btn-secundario">Contacto</a>
+                        <!--
+                        Otro botón-enlace que lleva a contacto.
+                        -->
                     </div>
                 </div>
+
                 <div class="hero-foto">
+                    <!--
+                    Zona de la foto principal del hero.
+                    -->
+
                     <!-- Cambia foto-hero.jpg por tu foto real -->
                     <img src="foto-hero.png" alt="Claudio">
+                    <!--
+                    img muestra una imagen.
+                    src = ruta del archivo
+                    alt = texto alternativo para accesibilidad
+
+                    Ojo: el comentario dice .jpg pero el archivo puesto es .png.
+                    No es un error obligatoriamente, pero conviene que comentario
+                    y archivo coincidan para no liarte.
+                    -->
                 </div>
             </div>
         </section>
 
         <!-- SOBRE MÍ -->
         <section id="sobremi">
+            <!--
+            Sección donde explicas quién eres.
+            -->
+
             <div class="sobremi-contenido">
+                <!--
+                Contenedor general de la sección.
+                -->
+
                 <div class="sobremi-foto">
+                    <!--
+                    Parte visual: tu foto o imagen secundaria.
+                    -->
+
                     <!-- Cambia foto-sobremi.jpg por tu foto real -->
                     <img src="foto-sobremi.png" alt="Claudio">
                 </div>
+
                 <div class="sobremi-texto">
+                    <!--
+                    Parte de texto de la sección sobre mí.
+                    -->
+
                     <span class="seccion-tag">Sobre mí</span>
+                    <!--
+                    Etiqueta pequeña decorativa.
+                    Suele usarse como mini título visual.
+                    -->
+
                     <h2 class="seccion-titulo">Claudio</h2>
+                    <!--
+                    Título principal de esta sección.
+                    Aquí sí está bien usar h2 porque ya es una subsección del main.
+                    -->
+
                     <p>
                         Soy estudiante de Economía y Empresa en Sevilla,
                         aprendiendo a programar y combinando el mundo
                         financiero con el desarrollo web.
                     </p>
+
                     <p>
                         Me apasiona construir herramientas digitales
                         que resuelvan problemas reales.
                     </p>
+                    <!--
+                    Estos dos párrafos cuentan tu perfil.
+                    -->
+
                     <div class="skills-tags">
+                        <!--
+                        Caja para mostrar etiquetas de habilidades.
+                        -->
+
                         <span class="skill-tag">HTML</span>
                         <span class="skill-tag">CSS</span>
                         <span class="skill-tag">JavaScript</span>
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Economía</span>
+                        <!--
+                        Cada span es una etiqueta visual de skill.
+                        -->
                     </div>
                 </div>
             </div>
@@ -83,41 +284,81 @@
 
         <!-- PROYECTOS -->
         <section id="proyectos">
+            <!--
+            Sección de proyectos principales.
+            -->
+
             <div class="proyectos-header">
+                <!--
+                Encabezado de la sección de proyectos.
+                -->
+
                 <span class="seccion-tag">Proyectos</span>
                 <h2 class="seccion-titulo">Estos son mis 2 proyectos</h2>
             </div>
+
             <div class="proyectos-grid">
+                <!--
+                Aquí va la rejilla de tarjetas de proyectos.
+                Si usas CSS Grid o Flexbox, este contenedor suele mandar.
+                -->
 
                 <!-- Proyecto 1 -->
                 <div class="proyecto-card">
+                    <!--
+                    Tarjeta individual del proyecto.
+                    -->
+
                     <!-- Cambia proyecto-dashboard.jpg por tu captura real -->
                     <img src="proyecto-dashboard.png" alt="Dashboard Financiero" class="proyecto-imagen">
+                    <!--
+                    Imagen del proyecto.
+                    -->
+
                     <div class="proyecto-info">
+                        <!--
+                        Caja con texto y enlace del proyecto.
+                        -->
+
                         <h3>Dashboard Financiero</h3>
+                        <!--
+                        Título del proyecto.
+                        -->
+
                         <p>
                             Herramienta donde puedes registrar tus
                             gastos e ingresos y visualizarlos.
                         </p>
+                        <!--
+                        Pequeña descripción del proyecto.
+                        -->
+
                         <a href="https://dashboardfinanciero.es"
                            target="_blank"
                            rel="noopener noreferrer"
                            class="proyecto-link">
                             Ver proyecto
                         </a>
+                        <!--
+                        Enlace externo al proyecto.
+                        target="_blank" lo abre en otra pestaña.
+                        rel="noopener noreferrer" es por seguridad.
+                        -->
                     </div>
                 </div>
 
                 <!-- Proyecto 2 -->
                 <div class="proyecto-card">
-                    <!-- Cambia proyecto-mapa.jpg por tu captura real -->
                     <img src="proyecto-mapa.png" alt="Mapa de Productos Locales" class="proyecto-imagen">
+
                     <div class="proyecto-info">
                         <h3>Mapa de Productos Locales</h3>
+
                         <p>
                             Mapa interactivo de Sevilla donde puedes
                             localizar negocios y productos locales.
                         </p>
+
                         <a href="https://claccolu06-maker.github.io/mapa-producto-local/"
                            target="_blank"
                            rel="noopener noreferrer"
@@ -126,27 +367,47 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- CONTACTO -->
         <section id="contacto">
+            <!--
+            Última sección principal: contacto.
+            -->
+
             <span class="seccion-tag">Contacto</span>
             <h2 class="seccion-titulo">¿Hablamos?</h2>
+
             <p class="contacto-mensaje">
                 Si quieres contactar conmigo puedes hacerlo
                 a través de mi correo.
             </p>
-            <a href="mailto:claccolu06@gmail.com" class="contacto-email">
-                claccolu06@gmail.com
-            </a>
-        </section>
 
+            <a href="mailto:claccolu06@gmail.com" class="contacto-email">
+                [claccolu06@gmail.com](mailto:claccolu06@gmail.com)
+            </a>
+            <!--
+            AQUÍ ESTÁ EL OTRO ERROR CLARO.
+
+            Dentro de un <a> normal no debes meter sintaxis Markdown.
+            Eso de:
+            [texto](enlace)
+            es Markdown, no HTML.
+
+            En HTML correcto sería simplemente:
+            claccolu06@gmail.com
+            -->
+        </section>
     </main>
 
     <!-- PIE DE PÁGINA -->
     <footer>
+        <!--
+        footer = pie de página.
+        Normalmente lleva copyright o cierre.
+        -->
+
         <p>Claudio 2026</p>
     </footer>
 
